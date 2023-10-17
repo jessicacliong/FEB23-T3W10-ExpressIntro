@@ -15,6 +15,8 @@ const PORT = process.env.PORT || 3000;
 // Ports can only be a integer between 1001 - 65536
 
 
+// some comment heree to trigger nodemon into restarting
+
 // GET localhost:3000/
 // app.get(route path, callback_function)
 app.get("/", (request, response) => {
@@ -22,15 +24,11 @@ app.get("/", (request, response) => {
      response.send("Hello world, this server is bananas!")
 });
 
-const someImportedRouterYay = require('./controllers/PokemonController');
+const someImportedRouterYay = require('../controllers/PokemonController');
 app.use("/pokemon", someImportedRouterYay);
 
-//configure the server -- happens all above this line ^^^^^
-
-// ACtivate the server -- happens all below this line vvvvvv
-
-
-// not good to hardcode to port 3000, so we can write PORT instead
-app.listen(PORT, HOST, () => {
-     console.log("Server is running on port: " + PORT);
-})
+module.exports = {
+     app,
+     HOST,
+     PORT
+}

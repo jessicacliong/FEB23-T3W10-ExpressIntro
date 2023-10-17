@@ -15,7 +15,7 @@ router.get("/", (request, response) => {
 router.get("/bananas", async (request, response) => {
 
 
-// the structure is await fetch, await result then the data response
+// the structure is await fetch, await result.json then the data response
      let result = await fetch("https://pokeapi.co/api/v2/pokemon/25")
      let data = await result.json();
 
@@ -31,9 +31,6 @@ router.post("/", (request, response) => {
           message:"POST request received!"
      })
 });
-
-
-
 
 module.exports = router;
 
