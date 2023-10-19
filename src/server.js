@@ -15,11 +15,11 @@ const PORT = process.env.PORT || 3000;
 
 // instance.routes(controllers or middleware)
 // instance.use(middleware)
-// instance.use(router)
+// instance.use(router) needs to use (express) on all of the routes
 // instance.get(express.json())
-// app.get(bananas.json())
-app.use(bananas.json());
-app.use(express.urlencoded({extended: true}));
+// app.get(bananas.json()) telling the instance of the server that for every route we just want our get request to have json data  
+app.use(bananas.json()); // use is for anything
+app.use(bananas.urlencoded({extended: true}));
 
 // some comment heree to trigger nodemon into restarting
 
@@ -30,7 +30,7 @@ app.get("/", (request, response) => {
      response.send("Hello world, this server is bananas!")
 });
 
-const someImportedRouterYay = require('../controllers/PokemonController');
+const someImportedRouterYay = require('./controllers/PokemonController');
 app.use("/pokemon", someImportedRouterYay);
 
 module.exports = {

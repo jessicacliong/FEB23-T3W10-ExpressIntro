@@ -1,4 +1,5 @@
 const express = require('express');
+const {checkForAlex} = require('./PokemonMiddleware');
 
 // create an instance of the Express router
 
@@ -23,24 +24,37 @@ router.get("/:numberOfLePokemon", async (request, response) => {
      });
 });
 
-// POST /pokemon/25
+// POST /pokemon/
 // Body: {username:"alex", pokemonId:someNumber}
-router.post("/:numberOfLePokemon", async (request, response) => {
+
+/*
+ router.post(
+ 	"/",
+ 	checkForAlex,
+ 	someOtherMiddleware,
+ 	WhateverMiddlewareWeCreated,
+ 	BlahBlahBlah,
+ 	async (request, response) => {}
+ )
+ */
+
+router.post("/", checkForAlex, async (request, response) => {
      // let pokemonId = request.params.numberOfLePokemon;
 
-     if (request.body.username != "alex"){
-		response.json({
-			message:"You are not authorised!"
-		});
-	}
+     // if (request.body.username != "alex"){
+     //      return response.json({
+     //           message:"You are not authorised!"
+     //      });
+     // }
+     console.log("Post with middleware has run");
 
      let result = await fetch("https://pokeapi.co/api/v2/pokemon/" + request.body.pokemonId);
      let data = await result.json();
 
      response.json({
-          name: data.name,  
+          name: data.name,
           username: request.body.username,
-		pokemonId: request.body.pokemonId  
+          pokemonId: request.body.pokemonId  
 
      });
 });
@@ -62,6 +76,7 @@ router.get("/bananas", async (request, response) => {
 
 // Create out of CRUD
 router.post("/", (request, response) => {
+	console.log("Post with NO middleware has run!")
      response.json({
           message:"POST request received!"
      })
