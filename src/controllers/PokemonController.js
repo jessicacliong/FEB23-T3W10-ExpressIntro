@@ -11,6 +11,41 @@ router.get("/", (request, response) => {
      });
 });
 
+// GET /pokemon/25
+router.get("/:numberOfLePokemon", async (request, response) => {
+     let pokemonId = request.params.numberOfLePokemon;
+
+     let result = await fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonId);
+     let data = await result.json();
+
+     response.json({
+          name: data.name    
+     });
+});
+
+// POST /pokemon/25
+// Body: {username:"alex", pokemonId:someNumber}
+router.post("/:numberOfLePokemon", async (request, response) => {
+     // let pokemonId = request.params.numberOfLePokemon;
+
+     if (request.body.username != "alex"){
+		response.json({
+			message:"You are not authorised!"
+		});
+	}
+
+     let result = await fetch("https://pokeapi.co/api/v2/pokemon/" + request.body.pokemonId);
+     let data = await result.json();
+
+     response.json({
+          name: data.name,  
+          username: request.body.username,
+		pokemonId: request.body.pokemonId  
+
+     });
+});
+
+
 //async needs to be called before the await command
 router.get("/bananas", async (request, response) => {
 
@@ -35,6 +70,7 @@ router.post("/", (request, response) => {
 module.exports = router;
 
 // can also be the following, but preferable syntax is above
+
 // module.exports = {
 //      PokemonRouter: router
 // }
